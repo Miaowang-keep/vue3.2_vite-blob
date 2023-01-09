@@ -1,0 +1,42 @@
+$fontSize: 37.5;
+
+@function px2rem($px) {
+    @return ($px / $fontSize)+rem;
+}
+
+@font-face {
+    font-family: '优设标题黑';
+    src: url('/src/asset/scss/fontFamily/优设标题黑.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FengGuangMingRuiTi-2';
+    src: url('/src/asset/scss/fontFamily/FengGuangMingRuiTi-2.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin center_around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+@mixin fl {
+    float: left;
+}
+
+@mixin fr {
+    float: right;
+}
+
+$theme-color: #33aef0
