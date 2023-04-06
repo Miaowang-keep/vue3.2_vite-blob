@@ -22,12 +22,13 @@ export const useUserStore = defineStore('userStore', () => {
     const nowToken = ref<string>(window.localStorage.getItem('token') || '')
 
     const setToken = (token: string) => {
+        console.log("token",token)
         nowToken.value = token
     }
     const setUserinfo = (userinfo: UserInfo) => {
         userInfoObj.value = userinfo
     }
 
-    return { userInfoObj, nowToken, setToken }
+    return { userInfoObj, nowToken, setToken ,setUserinfo}
 
 })
