@@ -5,8 +5,13 @@
 */
 export default [
     {
+        name: 'home',
+        path: '/',
+        component: () => import("../../views/dashbord.vue")
+    },
+    {
         name: 'login',
         path: '/login',
-        component: () => import("../../views/login.vue")
+        component: () => import("../../views/login/login.vue")
     }
 ]

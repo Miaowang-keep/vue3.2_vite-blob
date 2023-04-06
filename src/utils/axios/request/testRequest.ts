@@ -20,7 +20,7 @@ interface testRequest<T, R> extends RequestConfig<comonResponse<R>> {
 }
 
 const request = new Request({
-    baseURL: '',
+    baseURL: '/blog',
     timeout: 1000 * 60 * 5,
     interceptors: {
         // 请求拦截器
@@ -44,3 +44,4 @@ const testRequestInstance = <T = any, R = any>(config: testRequest<T, R>) => {
     }
     return request.request<comonResponse<R>>(config)
 }
+export default testRequestInstance

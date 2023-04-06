@@ -6,24 +6,40 @@
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-const path = require('path')
-const postcssPresetEnv = require('postcss-preset-env')
+import { resolve } from 'path'
+import commonjs from 'vite-plugin-commonjs'
+import postcssPresetEnv from "postcss-preset-env";
 
-function resolve(path) {
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+
+/* function resolve(path) {
     return path.resolve(__dirname, path)
-}
+} */
 
 
 export default defineConfig({
-    base: './',
-    plugins: [vue()],
+    base: '',
+    plugins: [vue(),
+    commonjs(),
+    AutoImport({
+        resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+        resolvers: [ElementPlusResolver()]
+    })
+    ],
     mode: 'development', //开发模式
     publicDir: 'public', // 静态资源服务的文件夹
     resolve: {
         alias: {   //别名
             "@": resolve('./src'),
             "@utils": resolve('./src/utils'),
-            "@components": resolve('./src/components')
+            "@components": resolve('./src/components'),
+            '@pinia': resolve('./src/pinia'),
+            '@img': resolve('./src/assets/img')
         },
         extensions: ['.js', '.ts', '.jsx', '.json', '.vue'],  //省略的扩展名 
     },
@@ -33,7 +49,12 @@ export default defineConfig({
         host: '0.0.0.0', //监听所有端口
         open: true, //服务启动时是否打开浏览器
         cors: true, // 允许跨域
-        proxy: {}, //自定义代理规则
+        proxy: {
+            '/blog': {
+                target: 'http://localhost:3001/',
+                changeOrigin: true,
+            }
+        },
     },
     css: {
         modules: { //css 模块化配置
@@ -43,13 +64,13 @@ export default defineConfig({
             globalModulePaths: [], // 代表你不想参与到css模块化的路径
         },
         preprocessorOptions: { //预处理器的配置
-            scss: {
+            sass: {
                 additionalData: '@import "./src/assets/scss/common.scss";' // scss 的入口文件
             }
         },
-        postcss: {
-            plugins: [postcssPresetEnv()]  //引用 postcssPresetEnv 插件
-        },
+        /*         postcss: {
+                    plugins: [postcssPresetEnv()]
+                }, */
         devSourcemap: false  //关闭css的sourcemap功能
 
     },
