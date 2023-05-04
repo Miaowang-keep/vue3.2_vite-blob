@@ -6,7 +6,7 @@ import viteProConfig from './vite.production'
 
 const envResolver = {
     'bulid': () => {
-        console.log("生产模式")
+    
         return ({ ...viteBaseConfig, ...viteProConfig })
     },
     'serve': () => {
