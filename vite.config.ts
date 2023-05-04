@@ -6,11 +6,9 @@ import viteProConfig from './vite.production'
 
 const envResolver = {
     'bulid': () => {
-    
         return ({ ...viteBaseConfig, ...viteProConfig })
     },
     'serve': () => {
-        console.log("开发模式")
         return ({ ...viteBaseConfig, ...viteDevConfig })
     }
 }
