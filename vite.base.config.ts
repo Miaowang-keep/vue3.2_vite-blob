@@ -14,6 +14,8 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
 
 /* function resolve(path) {
     return path.resolve(__dirname, path)
@@ -23,6 +25,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
     base: '',
     plugins: [vue(),
+        vueJsx(),
     commonjs(),
     AutoImport({
         resolvers: [ElementPlusResolver()],
@@ -45,13 +48,13 @@ export default defineConfig({
     },
     server: {
         https: false, //是否开启https
-        port: 3000, //端口号
+        port: 9530, //端口号
         host: '0.0.0.0', //监听所有端口
         open: true, //服务启动时是否打开浏览器
         cors: true, // 允许跨域
         proxy: {
-            '/blog': {
-                target: 'http://localhost:3001/',
+            '/lowerCode': {
+                target: 'http://localhost:3000/',
                 changeOrigin: true,
             }
         },

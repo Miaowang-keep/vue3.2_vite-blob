@@ -9,4 +9,7 @@ router.beforeEach(async (to, from) => {
     if (to.path === '/') {
         return { name: 'login' }
     }
+    if (from.path == '/login') {
+        
+    }
 })

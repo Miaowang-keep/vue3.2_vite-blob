@@ -7,6 +7,7 @@ import axios, { AxiosResponse } from "axios";
 import axiosRetry from "axios-retry";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { RequestConfig, RequestInterceptors } from "./type";
+import { ElNotification } from 'element-plus'
 
 export class Request {
   // 拦截器实例
@@ -43,7 +44,17 @@ export class Request {
     this.instance.interceptors.response.use(
       // 因为我们接口的数据都在res.data下，所以我们直接返回res.data
       (res: AxiosResponse) => {
-        return res.data;
+        //600 代表用户名密码错误
+        if(res?.data && res.data.data.code === 600) {
+          ElNotification({
+            title: 'Error',
+            message: '用户名或密码错误',
+            type: 'error',
+          })
+        } else {
+          return res.data;
+        }
+        
       },
       (err: any) => err
     );
@@ -64,16 +75,15 @@ export class Request {
         .request<any, T>(config) //  request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig<D>): Promise<R>;
         .then((res) => {
           // 如果我们为单个响应设置拦截器，这里使用单个响应的拦截器
-          if (config.interceptors?.responseInterceptors) {
-    
-              config.interceptors.responseInterceptors(res);
+          if (config.interceptors?.responseInterceptors) {          
+            res = config.interceptors.responseInterceptors<T>(res);
           }
           resolve(res);
         })
         .catch((err: any) => {
           reject(err);
         })
-        .finally(() => {});
+        .finally(() => { });
     });
   }
 }

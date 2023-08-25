@@ -5,9 +5,13 @@ export interface LoginParams {
     password: string
 }
 
-export interface LoginRes {
+export interface Userinfo {
     userid: SN,
     username: string,
-    userstate: SN,
-    roleid: SN
+    userState: Boolean,
+    phone: SN
+}
+export interface LoginRes {
+    userinfo:Userinfo,
+    token: string
 }

@@ -5,7 +5,6 @@ import { config } from 'process'
 
 //公用返回接口
 export interface comonResponse<T> {
-    data: string,
     code: number,
     result: T
 }
@@ -20,13 +19,14 @@ interface testRequest<T, R> extends RequestConfig<comonResponse<R>> {
 }
 
 const request = new Request({
-    baseURL: '/blog',
+    baseURL: '/lowerCode',
     timeout: 1000 * 60 * 5,
     interceptors: {
         // 请求拦截器
         requestInterceptors: config => config,
         // 响应拦截器
         responseInterceptors: (result: AxiosResponse) => {
+            console.log("实例响应请求111")
             return result
         },
     },
@@ -37,11 +37,12 @@ const request = new Request({
  *@generic R 响应结构
   @type   request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig<D>): Promise<R>;
  */
-const testRequestInstance = <T = any, R = any>(config: testRequest<T, R>) => {
+const testRequestInstance = <T = any, R = any>(config: testRequest<any, R>) => {
     const { method = 'GET' } = config
     if (method === 'get' || method === 'GET') {
         config.params = config.data //这里的data就是请求参数
     }
+    console.log(request)
     return request.request<comonResponse<R>>(config)
 }
 export default testRequestInstance

@@ -13,5 +13,10 @@ export default [
         name: 'login',
         path: '/login',
         component: () => import("../../views/login/login.vue")
+    },
+    {
+        name:'lowerCode',
+        path:'/lowerCode',
+        component:() =>import("../../views/lowerCodeMain/index.vue")
     }
 ]

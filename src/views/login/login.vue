@@ -61,22 +61,26 @@ import {
   watchEffect,
   computed,
 } from "vue";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "../../pinia/modules/user";
 import { loginByUsername } from "../../api/user/index";
 import type { FormInstance, FormRules } from "element-plus";
-import { LoginParam } from "./type";
+import { LoginParam, Userinfo, StringObj, Response } from "./type";
 
 const onSubmit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate(async (valid, fields) => {
+    console.log("22")
     if (valid) {
-      const res = await loginByUsername(formParams);
-      const {
-        data: { data, token },
-      } = res;
-      useUser.setToken(token);
+      try {
+        const res = await loginByUsername(formParams);
+        useUser.setUserinfo(res.result.userinfo);
+        useUser.setToken(res.result.token);
+        router.push({
+          name:'lowerCode'
+        })
+      } catch (error) {}
     } else {
       console.log("error");
     }
@@ -97,7 +101,6 @@ const rules = reactive<FormRules>({
 /**
  * 路由对象
  */
-const route = useRoute();
 /**
  * 路由实例
  */
