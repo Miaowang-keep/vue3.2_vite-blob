@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import viteBaseConfig from './vite.base.config'
 import viteDevConfig from './vite.development'
 import viteProConfig from './vite.production'
+const path = require('path')
 
 const envResolver = {
     'bulid': () => {
